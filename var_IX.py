@@ -3,13 +3,6 @@ import streamlit as st
 import matplotlib.pyplot as plt
 
 
-st.image('титаник.jpg')
-st.header('Данные пассажиров Титаника')
-st.text('Для просмотра данных конкретного пола выберите соответствующее')
-st.text('значение в выпадающем списке')
-sex = st.selectbox('Пол пассажира', ['Любой', 'муж.', 'жен.'])
-
-
 def fetch_data():
     lines = []
     with open('data.csv', 'r') as file:
@@ -42,8 +35,9 @@ def count_prices(data):
 
 def main():
     data = count_prices(fetch_data())
-    st.table(data)
+    sex = st.selectbox('Пол пассажира', ['Любой', 'муж.', 'жен.'])
 
+    st.table(data)
     # for pclass, total_price in data.items():
     #     print(f"Суммарная стоимость билетов для класса {pclass}: {total_price}")
     fig = plt.figure(figsize=(10, 5))
@@ -65,5 +59,3 @@ def main():
 
     # Displaying the plot
     st.pyplot(fig)
-
-main()
