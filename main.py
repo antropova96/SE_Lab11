@@ -1,6 +1,7 @@
 import streamlit as st
 from var_IV import main as make_iv
 from var_IX import main as make_ix
+from  var_XVIII import main as make_xviii
 
 
 def make_page():
@@ -17,10 +18,13 @@ def make_page():
 
 def main():
     var = make_page()
-    if var == 4:
-        make_iv()
-    elif var == 9:
-        make_ix()
+    match var:
+        case 4:
+            make_iv()
+        case 9:
+            make_ix()
+        case 18:
+            make_xviii()
 
 
 if __name__ == '__main__':
