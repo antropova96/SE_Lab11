@@ -43,7 +43,7 @@ def count_survivors(filter, data):
     return result
 
 
-def prepare_data(passenger_data):
+def prepare_data(p_data):
     p_data['Доля выживших'] = []
     for v1, v2 in zip(
         p_data['Пассажиров'],
