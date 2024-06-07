@@ -38,24 +38,49 @@ def main():
     sex = st.selectbox('Пол пассажира', ['Любой', 'муж.', 'жен.'])
 
     st.table(data)
-    # for pclass, total_price in data.items():
-    #     print(f"Суммарная стоимость билетов для класса {pclass}: {total_price}")
+
     fig = plt.figure(figsize=(10, 5))
     p_class = data['Класс обслуживания']
     male_price = data['Цена билета (муж.)']
     female_price = data['Цена билета (жен.)']
 
     if sex == 'Любой':
-        plt.bar(p_class, male_price, width=0.3, label='Male', align='center')
-        plt.bar(p_class, female_price, width=0.3, label='Female', color='pink', align='edge')
+        plt.bar(
+            p_class,
+            male_price,
+            width=0.3,
+            label='Male',
+            align='center'
+        )
+        plt.bar(
+            p_class,
+            female_price,
+            width=0.3,
+            label='Female',
+            color='pink',
+            align='edge'
+        )
     elif sex == 'муж.':
-        plt.bar(p_class, male_price, width=0.3, label='Male', align='center')
+        plt.bar(
+            p_class,
+            male_price,
+            width=0.3,
+            label='Male',
+            align='center'
+        )
     else:
-        plt.bar(p_class, female_price, width=0.3, label='Female', color='pink', align='edge')
-    # Customizing the appearance of the plot
+        plt.bar(
+            p_class,
+            female_price,
+            width=0.3,
+            label='Female',
+            color='pink',
+            align='edge'
+        )
+
     plt.title('Цены билетов по классам обслуживания')
     plt.xlabel('Класс обслуживания')
     plt.ylabel('Цена билета')
 
-    # Displaying the plot
+
     st.pyplot(fig)
