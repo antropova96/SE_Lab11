@@ -82,5 +82,4 @@ def main():
     plt.xlabel('Класс обслуживания')
     plt.ylabel('Цена билета')
 
-
     st.pyplot(fig)
