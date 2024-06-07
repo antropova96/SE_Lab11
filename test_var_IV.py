@@ -1,11 +1,11 @@
 from var_IV import count_passengers, count_survival_rate
 
 data = [
-        ['1', '0', '3', '', 'male', '22', '1', '0', 'A/5 21171', '7.25', '', 'S'],
-        ['2', '1', '1', '', 'female', '38', '1', '0', 'PC 17599', '71.2833', 'C85', 'C'],
-        ['3', '1', '3', '', 'female', '26', '0', '0', 'STON/O2. 3101282', '7.925', '', 'S'],
-        ['4', '1', '1', '', 'female', '61', '1', '0', '113803,53.1', 'C123', 'S'],
-        ['5', '0', '3', '', 'male', '35', '0', '0', '373450', '8.05', '', 'S'],
+        ['1', '0', '3', '', '', '22'],
+        ['2', '1', '1', '', '', '38'],
+        ['3', '1', '3', '', '', '26'],
+        ['4', '1', '1', '', '', '61'],
+        ['5', '0', '3', '', '', '35'],
     ]
 
 
@@ -15,7 +15,7 @@ def test_count_survived_passengers():
 
     assert answer == {'under_30': 1,
                       'above_60': 1,
-                      'total': 3
+                      'all': 3
                       }
 
 
@@ -24,7 +24,10 @@ def test_calculate_survival_rate():
     suvivours = count_passengers(data, pclass_filter)
 
     survival_rate = count_survival_rate(suvivours)
-    assert survival_rate == {'survival rate above 60': 33, 'survival rate under 30': 33}
+    assert survival_rate == {
+        'survival rate above 60': 33,
+        'survival rate under 30': 33
+    }
 
 
 def test_count_survived_first_class():
@@ -33,7 +36,7 @@ def test_count_survived_first_class():
 
     assert answer == {'under_30': 0,
                       'above_60': 1,
-                      'total': 1
+                      'all': 1
                       }
 
 
@@ -43,7 +46,7 @@ def test_count_survived_third_class():
 
     assert answer == {'under_30': 1,
                       'above_60': 0,
-                      'total': 2
+                      'all': 2
                       }
 
 

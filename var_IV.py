@@ -22,13 +22,13 @@ def count_passengers(csv_data, pclass_filter='Любой') -> dict:
     data = {
         'under_30': 0,
         'above_60': 0,
-        'total': 0
+        'all': 0
     }
 
     for line in csv_data:
         age = line[5]
         if age == '':
-            continue  # отбрасываем строки с неизвестным возрастом согласно условию
+            continue  # отбрасываем строки
         age = float(age)
 
         if 30 < age < 60:
@@ -39,7 +39,7 @@ def count_passengers(csv_data, pclass_filter='Любой') -> dict:
             if pclass != pclass_filter:
                 continue
 
-        data['total'] += 1
+        data['all'] += 1
 
         if int(line[1]) == 1:
             if age < 30.0:
@@ -52,8 +52,8 @@ def count_passengers(csv_data, pclass_filter='Любой') -> dict:
 
 def count_survival_rate(data: dict) -> dict:
     return {
-        'survival rate under 30': round(data['under_30'] / data['total'] * 100),
-        'survival rate above 60': round(data['above_60'] / data['total'] * 100)
+        'survival rate under 30': round(data['under_30'] / data['all'] * 100),
+        'survival rate above 60': round(data['above_60'] / data['all'] * 100)
     }
 
 
@@ -86,7 +86,7 @@ def main():
                 survivors['survival rate under 30'],
                 survivors['survival rate above 60']
             ]
-         }
+        }
     )
     make_figure(survivors)
 
