@@ -44,17 +44,20 @@ def count_survivors(filter, data):
 
 
 def prepare_data(passenger_data):
-    passenger_data['Доля выживших'] = []
-    for v1, v2 in zip(passenger_data['Пассажиров'], passenger_data['Выживших']):
-        passenger_data['Доля выживших'].append(
+    p_data['Доля выживших'] = []
+    for v1, v2 in zip(
+        p_data['Пассажиров'],
+        p_data['Выживших']
+    ):
+        p_data['Доля выживших'].append(
             round(v2 / v1 * 100)
         )
-    passenger_data.pop('Пассажиров')
-    passenger_data.pop('Выживших')
-    passenger_data['Пункт посадки'][passenger_data['Пункт посадки'].index('S')] = 'Саутгемптон'
-    passenger_data['Пункт посадки'][passenger_data['Пункт посадки'].index('Q')] = 'Квинстаун'
-    passenger_data['Пункт посадки'][passenger_data['Пункт посадки'].index('C')] = 'Шербур'
-    return passenger_data
+    p_data.pop('Пассажиров')
+    p_data.pop('Выживших')
+    p_data['Пункт посадки'][p_data['Пункт посадки'].index('S')] = 'Саутгемптон'
+    p_data['Пункт посадки'][p_data['Пункт посадки'].index('Q')] = 'Квинстаун'
+    p_data['Пункт посадки'][p_data['Пункт посадки'].index('C')] = 'Шербур'
+    return p_data
 
 
 def main():
