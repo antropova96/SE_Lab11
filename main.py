@@ -1,7 +1,7 @@
 import streamlit as st
 from var_IV import main as make_iv
 from var_IX import main as make_ix
-from  var_XVIII import main as make_xviii
+from var_XVIII import main as make_xviii
 
 
 def make_page():
@@ -12,7 +12,6 @@ def make_page():
     var = st.selectbox(
         'Выберите вариант', [4, 9, 18]
     )
-
     return var
 
 
