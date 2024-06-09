@@ -13,70 +13,57 @@ def fetch_data():
     return lines
 
 
-def count_prices(data):
-    ticket_prices_m = {'1': 0, '2': 0, '3': 0}
-    ticket_prices_f = {'1': 0, '2': 0, '3': 0}
+def count_prices(data, filter):
+    ticket_prices = {'1': 0, '2': 0, '3': 0}
+    if filter == 'муж.':
+        filter = 'male'
+    elif filter == 'жен.':
+        filter = 'female'
+    else:
+        filter = None
 
     for strings in data:
         pclass = strings[2]
         fare = float(strings[9])
         sex = strings[4]
-        if sex == 'male':
-            ticket_prices_m[pclass] += fare
-        elif sex == 'female':
-            ticket_prices_f[pclass] += fare
+        if filter:
+            if sex == filter:
+                ticket_prices[pclass] += fare
+        else:
+            ticket_prices[pclass] += fare
 
     return {
-            'Класс обслуживания': list(ticket_prices_m.keys()),
-            'Цена билета (муж.)': list(ticket_prices_m.values()),
-            'Цена билета (жен.)': list(ticket_prices_f.values())
+            'Класс обслуживания': list(ticket_prices.keys()),
+            'Цена билета': list(ticket_prices.values()),
         }
 
 
 def main():
-    data = count_prices(fetch_data())
     sex = st.selectbox('Пол пассажира', ['Любой', 'муж.', 'жен.'])
+    data = count_prices(fetch_data(), filter=sex)
 
     st.table(data)
 
     fig = plt.figure(figsize=(10, 5))
     p_class = data['Класс обслуживания']
-    male_price = data['Цена билета (муж.)']
-    female_price = data['Цена билета (жен.)']
+    price = data['Цена билета']
 
-    if sex == 'Любой':
-        plt.bar(
-            p_class,
-            male_price,
-            width=0.3,
-            label='Male',
-            align='center'
-        )
-        plt.bar(
-            p_class,
-            female_price,
-            width=0.3,
-            label='Female',
-            color='pink',
-            align='edge'
-        )
-    elif sex == 'муж.':
-        plt.bar(
-            p_class,
-            male_price,
-            width=0.3,
-            label='Male',
-            align='center'
-        )
-    else:
-        plt.bar(
-            p_class,
-            female_price,
-            width=0.3,
-            label='Female',
-            color='pink',
-            align='edge'
-        )
+    match sex:
+        case 'муж.':
+            color = 'blue'
+        case 'жен.':
+            color = 'pink'
+        case 'Любой':
+            color = 'green'
+
+    plt.bar(
+        p_class,
+        price,
+        width=0.3,
+        label='Male',
+        align='center',
+        color=color
+    )
 
     plt.title('Цены билетов по классам обслуживания')
     plt.xlabel('Класс обслуживания')
