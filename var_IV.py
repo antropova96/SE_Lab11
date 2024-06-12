@@ -31,24 +31,10 @@ def count_passengers(csv_data, p_class) -> dict:
                 data['above_60'] += 1
 
     return {
-        'survival rate under 30': round(data['under_30'] / data['all'] * 100),
-        'survival rate above 60': round(data['above_60'] / data['all'] * 100)
+        'under_30': round(data['under_30'] / data['all'] * 100),
+        'above_60': round(data['above_60'] / data['all'] * 100)
     }
 
-
-def make_figure(data):
-    fig = plt.figure(figsize=(10, 5))
-
-    plt.bar(
-        ['Доля выживших младше 30 лет', 'Доля выживших старше 60 лет'],
-        [data['survival rate under 30'], data['survival rate above 60']],
-    )
-
-    plt.xlabel('Возрастная группа')
-    plt.ylabel('Доля выживших (%)')
-    plt.title('Доля выживших пассажиров по возрастным группам')
-
-    st.pyplot(fig)
 
 
 def make_iv(data):
@@ -58,9 +44,20 @@ def make_iv(data):
         {
             'Возрастная группа': ['До 30 лет', 'Старше 60 лет'],
             'Доля спасшихся (%)': [
-                survivors['survival rate under 30'],
-                survivors['survival rate above 60']
+                survivors['under_30'],
+                survivors['above_60']
             ]
         }
     )
-    make_figure(survivors)
+    fig = plt.figure(figsize=(10, 5))
+
+    plt.bar(
+        ['Доля выживших младше 30 лет', 'Доля выживших старше 60 лет'],
+        [data['under_30'], data['above_60']],
+    )
+
+    plt.xlabel('Возрастная группа')
+    plt.ylabel('Доля выживших (%)')
+    plt.title('Доля выживших пассажиров по возрастным группам')
+
+    st.pyplot(fig)
