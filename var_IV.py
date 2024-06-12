@@ -36,7 +36,6 @@ def count_passengers(csv_data, p_class) -> dict:
     }
 
 
-
 def make_iv(data):
     p_class = st.radio('Класс пассажира', ['Любой', '1', '2', '3'])
     survivors = count_passengers(data, p_class)
@@ -54,6 +53,7 @@ def make_iv(data):
     plt.bar(
         ['Доля выживших младше 30 лет', 'Доля выживших старше 60 лет'],
         [data['under_30'], data['above_60']],
+        width=0.3
     )
 
     plt.xlabel('Возрастная группа')
