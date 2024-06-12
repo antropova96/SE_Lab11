@@ -1,5 +1,6 @@
 import streamlit as st
-from var_IV import main as make_iv
+import csv
+from var_IV import make_iv
 from var_IX import main as make_ix
 from var_XVIII import main as make_xviii
 
@@ -15,11 +16,22 @@ def make_page():
     return var
 
 
+def read_csv_data():
+    data = []
+    with open('data.csv') as file:
+        csv_reader = csv.reader(file)
+        next(csv_reader)
+        for line in csv_reader:
+            data.append(line)
+    return data
+
+
 def main():
     var = make_page()
+    data = read_csv_data()
     match var:
         case 4:
-            make_iv()
+            make_iv(data)
         case 9:
             make_ix()
         case 18:
