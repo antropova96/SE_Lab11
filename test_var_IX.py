@@ -24,13 +24,13 @@ def test_count_prices_default():
 
 def test_count_prices_no_male():
 
-    answer = count_prices(data, filter='муж.')
+    answer = count_prices(data, filter='male')
     assert answer['Цена билета'] == [200.0, 100.0, 50.0]
 
 
 def test_count_prices_no_female():
 
-    answer = count_prices(data, filter='жен.')
+    answer = count_prices(data, filter='female')
     assert answer['Цена билета'] == [100.0, 50.0, 50.0]
 
 

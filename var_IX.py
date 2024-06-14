@@ -3,25 +3,8 @@ import streamlit as st
 import matplotlib.pyplot as plt
 
 
-def fetch_data():
-    lines = []
-    with open('data.csv', 'r') as file:
-        reader = csv.reader(file)
-        next(reader)
-        for line in reader:
-            lines.append(line)
-    return lines
-
-
 def count_prices(data, filter):
     ticket_prices = {'1': 0, '2': 0, '3': 0}
-    if filter == 'муж.':
-        filter = 'male'
-    elif filter == 'жен.':
-        filter = 'female'
-    else:
-        filter = None
-
     for strings in data:
         pclass = strings[2]
         fare = float(strings[9])
@@ -38,19 +21,26 @@ def count_prices(data, filter):
         }
 
 
-def main():
+def make_ix(data):
     st.markdown(
         'Представлен вариант IX: Найти количество пассажиров каждого пола по '
         'указанному классу обслуживания'
     )
     sex = st.selectbox('Пол пассажира', ['Любой', 'муж.', 'жен.'])
-    data = count_prices(fetch_data(), filter=sex)
+    if sex == 'муж.':
+        sex = 'male'
+    elif sex == 'жен.':
+        sex = 'female'
+    else:
+        sex = None
 
-    st.dataframe(data, use_container_width=True)
+    passengers = count_prices(data, filter=sex)
+
+    st.dataframe(passengers, use_container_width=True)
 
     fig = plt.figure(figsize=(10, 5))
-    p_class = data['Класс обслуживания']
-    price = data['Цена билета']
+    p_class = passengers['Класс обслуживания']
+    price = passengers['Цена билета']
 
     match sex:
         case 'муж.':

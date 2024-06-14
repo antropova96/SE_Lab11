@@ -1,7 +1,7 @@
 import streamlit as st
 import csv
 from var_IV import make_iv
-from var_IX import main as make_ix
+from var_IX import make_ix
 from var_XVIII import main as make_xviii
 
 
@@ -33,7 +33,7 @@ def main():
         case 4:
             make_iv(data)
         case 9:
-            make_ix()
+            make_ix(data)
         case 18:
             make_xviii()
 
