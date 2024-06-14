@@ -39,6 +39,10 @@ def count_prices(data, filter):
 
 
 def main():
+    st.markdown(
+        'Представлен вариант IX: Найти количество пассажиров каждого пола по '
+        'указанному классу обслуживания'
+    )
     sex = st.selectbox('Пол пассажира', ['Любой', 'муж.', 'жен.'])
     data = count_prices(fetch_data(), filter=sex)
 
