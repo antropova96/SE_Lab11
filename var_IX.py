@@ -42,7 +42,7 @@ def main():
     sex = st.selectbox('Пол пассажира', ['Любой', 'муж.', 'жен.'])
     data = count_prices(fetch_data(), filter=sex)
 
-    st.table(data)
+    st.dataframe(data, use_container_width=True)
 
     fig = plt.figure(figsize=(10, 5))
     p_class = data['Класс обслуживания']
