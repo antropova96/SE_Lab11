@@ -37,22 +37,27 @@ def count_passengers(csv_data, p_class) -> dict:
 
 
 def make_iv(data):
+    st.markdown(
+        'Представлен вариант IV: Посчитать процент выживших молодых (до 30)'
+        ' и старых (после 60) пассажиров, указав класс билета'
+    )
     p_class = st.radio('Класс пассажира', ['Любой', '1', '2', '3'])
     survivors = count_passengers(data, p_class)
-    st.table(
+    st.dataframe(
         {
             'Возрастная группа': ['До 30 лет', 'Старше 60 лет'],
             'Доля спасшихся (%)': [
                 survivors['under_30'],
                 survivors['above_60']
             ]
-        }
+        },
+        use_container_width=True
     )
     fig = plt.figure(figsize=(10, 5))
 
     plt.bar(
         ['Доля выживших младше 30 лет', 'Доля выживших старше 60 лет'],
-        [data['under_30'], data['above_60']],
+        [survivors['under_30'], survivors['above_60']],
         width=0.3
     )
 
