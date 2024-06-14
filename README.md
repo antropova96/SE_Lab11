@@ -1,4 +1,4 @@
-# SE_Lab11
+# SE_Lab14
 
 [![Actions Status](https://github.com/antropova96/SE_Lab11/actions/workflows/test.yml/badge.svg)](https://github.com/antropova96/SE_Lab11/actions/)
 
