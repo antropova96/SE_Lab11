@@ -42,11 +42,11 @@ def make_ix(data):
     price = passengers['Цена билета']
 
     match sex:
-        case 'муж.':
+        case 'male':
             color = 'blue'
-        case 'жен.':
+        case 'female':
             color = 'pink'
-        case 'Любой':
+        case _:
             color = 'green'
 
     plt.bar(
