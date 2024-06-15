@@ -73,7 +73,7 @@ def main():
     )
     strings = parse_csv()
     data = prepare_data(count_survivors(slider, strings))
-    st.table(data)
+    st.dataframe(data, use_container_width=True)
 
     fig = plt.figure(figsize=(10, 5))
 
