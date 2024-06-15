@@ -2,7 +2,7 @@ import streamlit as st
 import csv
 from var_IV import make_iv
 from var_IX import make_ix
-from var_XVIII import main as make_xviii
+from var_XVIII import make_xviii
 
 
 def make_page():
@@ -35,7 +35,7 @@ def main():
         case 9:
             make_ix(data)
         case 18:
-            make_xviii()
+            make_xviii(data)
 
 
 if __name__ == '__main__':
