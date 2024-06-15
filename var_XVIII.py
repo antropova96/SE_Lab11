@@ -1,23 +1,30 @@
-import csv
 import streamlit as st
 import matplotlib.pyplot as plt
 
 
-def parse_csv():
-    result = []
-    with open("data.csv") as file:
-        csv_file = csv.reader(file)
-        next(csv_file)
-        for line in csv_file:
-            result.append(line)
-    return result
+def prepare_data(p_data):
+    p_data['Доля выживших'] = []
+    for v1, v2 in zip(
+            p_data['Пассажиров'],
+            p_data['Выживших']
+    ):
+        if v2 == 0:
+            p_data['Доля выживших'].append(0)
+        else:
+            p_data['Доля выживших'].append(
+                round(v2 / v1 * 100)
+            )
+    p_data.pop('Пассажиров')
+    p_data.pop('Выживших')
+
+    return p_data
 
 
-def count_survivors(filter, data):
+def count_survivors(data, filter):
     result = {
-        'Пункт посадки': [],
-        'Пассажиров': [],
-        'Выживших': [],
+        'Пункт посадки': ['Саутгемптон', 'Квинстаун', 'Шербур'],
+        'Пассажиров': [0, 0, 0],
+        'Выживших': [0, 0, 0],
     }
     for line in data:
         age_str = line[5]
@@ -26,41 +33,25 @@ def count_survivors(filter, data):
         else:
             age = 0
         embarked = line[11]
-        survived = int(line[1])
+        survived = line[1]
         if embarked:
             #  отбрасываем пассажиров старше указанного возраста
             if age > filter:
                 continue
-            if embarked in result['Пункт посадки']:
-                indx = result['Пункт посадки'].index(embarked)
-                result['Пассажиров'][indx] += 1
-                if survived:
-                    result['Выживших'][indx] += 1
-            else:
-                result['Пункт посадки'].append(embarked)
-                result['Пассажиров'].append(1)
-                result['Выживших'].append(1 if survived else 0)
-    return result
+            match embarked:
+                case 'S':
+                    indx = 0
+                case 'Q':
+                    indx = 1
+                case 'C':
+                    indx = 2
+            result['Пассажиров'][indx] += 1
+            if survived == '1':
+                result['Выживших'][indx] += 1
+    return prepare_data(result)
 
 
-def prepare_data(p_data):
-    p_data['Доля выживших'] = []
-    for v1, v2 in zip(
-        p_data['Пассажиров'],
-        p_data['Выживших']
-    ):
-        p_data['Доля выживших'].append(
-            round(v2 / v1 * 100)
-        )
-    p_data.pop('Пассажиров')
-    p_data.pop('Выживших')
-    p_data['Пункт посадки'][p_data['Пункт посадки'].index('S')] = 'Саутгемптон'
-    p_data['Пункт посадки'][p_data['Пункт посадки'].index('Q')] = 'Квинстаун'
-    p_data['Пункт посадки'][p_data['Пункт посадки'].index('C')] = 'Шербур'
-    return p_data
-
-
-def main():
+def make_xviii(data):
     st.markdown(
         'Представлен вариант IV: Посчитать долю выживших по каждому пункту '
         'посадки указав максимальный возраст'
@@ -71,8 +62,7 @@ def main():
         max_value=100,
         value=100
     )
-    strings = parse_csv()
-    data = prepare_data(count_survivors(slider, strings))
+    data = count_survivors(data, filter=slider)
     st.dataframe(data, use_container_width=True)
 
     fig = plt.figure(figsize=(10, 5))
